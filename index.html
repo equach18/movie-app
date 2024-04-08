@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App</title>
+</head>
+<body>
+    <!-- Contains a form with two inputs for a title and rating along with a button to submit the form. -->
+    <form>
+        <input id="title-input" placeholder="Movie Title">
+        <input id="rating-input" placeholder="Rating">
+        <button>Submit</button>
+    </form>
+    
+    <div class="movie-container">
+        <table>
+
+        </table>
+    </div>
+    
+    <select name="sorter" id="sort-select">
+        <option>Sort Movies by:</option>
+        <option class="rating-option" id="ratingAscending">Rating (Ascending)</option>
+        <option class="rating-option" id="ratingDescending">Rating (Descending)</option>
+        <option class="alph-option" id="alphAscending">Alphabetically (Ascending)</option>
+        <option class="alph-option" id="alphDescending">Alphabetically (Descending)</option>
+    </select>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+    $(function(){
+        // Ensure that the rating of a movie can only be between 0 and 10.
+        $('#rating-input').attr({
+            type: 'number',
+            min: '0',
+            max: '10'
+        });
+
+        //makes rating input larger to see placeholder 
+        $('#rating-input').css('width', '80px');
+
+        //Ensure that a title has at least 2 characters in it.
+        $('#title-input').attr('minlength', '2');
+        
+        // When the form is submitted, capture the values for each of the inputs and append them to the DOM along with a button to remove each title and rating from the DOM.
+        $('form').on('submit', (e) => {
+            e.preventDefault();
+            const titleInput = $('#title-input').val();
+            const ratingInput = $('#rating-input').val();
+            $('table').append(`<tr class="user-input"><td class="movie">${titleInput}</td><td class="rating">${ratingInput}</td><td><button id="remove-btn">Remove</button></td></tr>`);
+            $('form')[0].reset();
+        });
+        
+        // When the button to remove is clicked, remove each title and rating from the DOM.
+        $('.movie-container').click(function(e){
+            $(e.target).parent().parent().remove();
+        })
+    });      
+    
+
+</script>
+</body>
+</html>
